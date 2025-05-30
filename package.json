@@ -1,0 +1,26 @@
+{
+  "name": "daily-fish-backend",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "dev": "wrangler dev", 
+    "deploy": "npm run build && wrangler deploy",
+    "start": "wrangler dev",
+    "generate": "prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "@prisma/extension-accelerate": "^2.0.1",
+    "hono": "^4.7.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.28",
+    "prisma": "^6.8.2",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.18.0"
+  }
+}

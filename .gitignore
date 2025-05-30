@@ -1,0 +1,8 @@
+# Git のバージョン管理から除外するディレクトリとファイル
+
+node_modules/
+.env
+dist/
+build/
+*.log
+npm-debug.log*

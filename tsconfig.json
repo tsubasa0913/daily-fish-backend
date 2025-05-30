@@ -1,0 +1,17 @@
+// my-blog-backend/tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext", // Workers は ESM を利用するため ESNext に変更
+    "lib": ["ESNext"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "moduleResolution": "Bundler" // NodeNext から Bundler に変更することが推奨
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
