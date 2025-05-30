@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "tsc",
-    "dev": "wrangler dev", 
+    "dev": "wrangler dev",
     "deploy": "npm run build && wrangler deploy",
     "start": "wrangler dev",
     "generate": "prisma generate"
