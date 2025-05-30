@@ -1,0 +1,50 @@
+// my-blog-backend/prisma/schema.prisma
+
+// Prisma Client 生成用の設定
+generator client {
+  provider = "prisma-client-js"
+  // `accelerate` は最新のPrismaバージョンではpreviewFeaturesとして指定する必要がない場合があります。
+  // もし `npm run generate` でエラーが出た場合は、この行をコメントアウトするか削除してください。
+  // previewFeatures = ["accelerate"]
+}
+
+// データベース接続の設定
+datasource db {
+  provider  = "postgresql"
+  // 本番環境やデプロイでは Accelerate URL を使用します。
+  // .env ファイルに DATABASE_URL_ACCELERATE を設定してください。
+  url       = env("DATABASE_URL_ACCELERATE")
+
+  // ローカル開発やマイグレーションのために元のデータベースURLを残しておくことが強く推奨されます。
+  // これは `npx prisma migrate dev` や `npx prisma db push` などで直接データベースにアクセスするために必要です。
+  // .env ファイルに DATABASE_URL を設定してください。
+  directUrl = env("DATABASE_URL")
+
+  // schemasはdatasourceブロックに直接記述するものではありません。
+  // もし複数のスキーマを扱いたい場合は、generator client { previewFeatures = ["multiSchema"] }
+  // のように設定し、その上で必要な対応を行うことになります。
+  // 通常、Supabaseの`auth`スキーマはPrismaで直接操作する必要はありません。
+}
+
+// ここからモデル定義...
+
+model Post {
+  id        String   @id @default(uuid()) @map("id")
+  createdAt DateTime @default(now()) @map("created_at")
+  title     String
+  content   String
+  authorId  String   @map("author_id") // Supabase の auth.users.id を参照する UUID
+  author    User     @relation(fields: [authorId], references: [id])
+  published Boolean  @default(true)
+
+  @@map("posts") // データベース上のテーブル名が "posts" であることを指定
+}
+
+// Supabase の auth.users テーブルにマッピング
+model User {
+  id    String @id @map("id") // auth.users の UUID
+  email String @unique @map("email") // auth.users の email
+  posts Post[] // このユーザーが作成した投稿
+
+  @@map("auth.users") // データベース上のテーブル名が "auth.users" であることを指定
+}
