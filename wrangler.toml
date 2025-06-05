@@ -1,0 +1,4 @@
+name = "daily-fish-backend" # Cloudflare Workers にデプロイされるワーカーの名前
+main = "./dist/index.js" # エントリーポイントとなるビルド済みファイル
+compatibility_date = "2024-06-03" # 最新の互換性日付 (デプロイ時の最新日付に合わせる)
+
