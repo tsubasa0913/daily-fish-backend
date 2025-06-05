@@ -1,0 +1,39 @@
+// my-blog-backend/prisma/schema.prisma
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"] // multiSchema を有効にする
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL_ACCELERATE") // アプリケーション用
+  directUrl = env("DIRECT_URL")           // CLIコマンド用（db pull など）
+  schemas   = ["public", "auth"] // public と auth スキーマを参照
+}
+
+// ★この Post モデルの定義だけを残す★
+model Post {
+  id        String   @id @default(uuid()) @map("id")
+  createdAt DateTime @default(now()) @map("created_at")
+  title     String
+  content   String
+  authorId  String   @map("author_id")
+  author    User     @relation(fields: [authorId], references: [id])
+  published Boolean  @default(true)
+
+  @@map("posts")
+  @@schema("public") // public スキーマに属する
+}
+
+// ★この User モデルの定義だけを残す★
+// Supabase の auth.users テーブルにマッピング
+model User {
+  id    String @id @map("id")
+  email String @unique @map("email")
+  posts Post[]
+
+  // @@map("auth.users")
+  @@map("users")       // ★正しくはこれです★
+  @@schema("auth") // auth スキーマに属する
+}

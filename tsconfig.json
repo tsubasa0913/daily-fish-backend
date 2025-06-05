@@ -10,7 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "moduleResolution": "Bundler" // NodeNext から Bundler に変更することが推奨
+    "moduleResolution": "Bundler", // NodeNext から Bundler に変更することが推奨
+    "types": ["@cloudflare/workers-types", "@types/node"] // <-- この行を追加
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

@@ -2,7 +2,9 @@
 
 node_modules/
 .env
+.dev.vars
 dist/
 build/
 *.log
 npm-debug.log*
+/src/generated/prisma
